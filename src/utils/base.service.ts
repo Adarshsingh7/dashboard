@@ -1,3 +1,5 @@
+/** @format */
+
 import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 
@@ -18,3 +20,5 @@ class BaseService<T> {
 		await this.api.post('', obj);
 	}
 }
+
+export default BaseService;
