@@ -1,6 +1,15 @@
+/** @format */
+
 import { Link } from 'react-router-dom';
 
-import { ChevronDown, ChevronUp, MoreHorizontal, User2 } from 'lucide-react';
+import {
+	ChevronDown,
+	ChevronUp,
+	Moon,
+	MoreHorizontal,
+	Sun,
+	User2,
+} from 'lucide-react';
 
 import {
 	SidebarFooter,
@@ -26,11 +35,14 @@ import {
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+import '@/components/SuperTable';
+
 import {
 	Collapsible,
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from '@/components/ui/collapsible';
+import { useTheme } from '@/contexts/context';
 
 interface dropdownItemContentProps extends MenuProps {
 	dropdownItemContent: { title: string; action: () => void }[];
@@ -278,7 +290,10 @@ function Content({ node }: PanelContentProps) {
 
 function AppSidebar({ children }: { children: React.ReactNode }) {
 	return (
-		<Sidebar variant='floating'>
+		<Sidebar
+			variant='floating'
+			className='bg-background w-64 shrink-0 overflow-y-auto'
+		>
 			<Header />
 			{children}
 			<Footer />
@@ -286,15 +301,30 @@ function AppSidebar({ children }: { children: React.ReactNode }) {
 	);
 }
 
+function NavBar() {
+	const { mode, toggleMode } = useTheme();
+	return (
+		<div className='flex gap-5 sticky top-0 py-2 mb-4 border-b z-50 backdrop-blur-sm'>
+			<SidebarTrigger />
+
+			<div className='w-full flex justify-between items-center'>
+				<span>/dashboard/home</span>
+
+				<span
+					onClick={toggleMode}
+					className='cursor-pointer mr-5'
+				>
+					{mode === 'light' ? <Sun /> : <Moon />}
+				</span>
+			</div>
+		</div>
+	);
+}
+
 function Main({ children }: { children?: React.ReactNode }) {
 	return (
-		<main className='flex-1 p-4 relative'>
-			<div className='flex gap-5 sticky top-0 bg-white/50 py-2 mb-4 border-b z-50 backdrop-blur-sm'>
-				<SidebarTrigger />
-				<div>
-					<span className='text-gray-400'>/dashboard/home</span>
-				</div>
-			</div>
+		<main className='flex-1 min-w-0 p-4 relative bg-background text-foreground w-full h-full overflow-hidden'>
+			<NavBar />
 			{children}
 		</main>
 	);
@@ -308,12 +338,20 @@ function SidePanel({
 	children?: React.ReactNode;
 }) {
 	return (
-		<SidebarProvider>
-			<AppSidebar>
-				<Content node={node.node} />
-			</AppSidebar>
-			<Main>{children}</Main>
-		</SidebarProvider>
+		<>
+			<SidebarProvider>
+				{/* Sidebar */}
+				<AppSidebar>
+					<Content node={node.node} />
+				</AppSidebar>
+
+				{/* Main content wrapper */}
+				<Main>
+					{/* Make inner content scroll Y only */}
+					<div className='h-full overflow-y-auto'>{children}</div>
+				</Main>
+			</SidebarProvider>
+		</>
 	);
 }
 

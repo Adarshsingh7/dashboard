@@ -1,4 +1,6 @@
-import { createContext, useContext, useState } from 'react';
+/** @format */
+
+import { createContext, useState } from 'react';
 
 interface LoadingType {
 	isLoading: boolean;
@@ -27,14 +29,5 @@ const LoadingProvider = ({ children }: { children: React.ReactNode }) => {
 	);
 };
 
-const useLoading = () => {
-	const context = useContext(LoadingContext);
-	if (!context) {
-		throw new Error('useLoading must be used within a LoadingProvider');
-	}
-	return context;
-};
-
-// eslint-disable-next-line react-refresh/only-export-components
-export { useLoading };
+export { LoadingContext };
 export default LoadingProvider;

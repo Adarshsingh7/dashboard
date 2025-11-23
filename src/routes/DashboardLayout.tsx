@@ -1,3 +1,5 @@
+/** @format */
+
 import SidePanel from '@/components/SidePanel';
 // import { Outlet } from 'react-router-dom';
 import {

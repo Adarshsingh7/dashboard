@@ -1,3 +1,5 @@
+/** @format */
+
 import {
 	Card,
 	CardContent,
@@ -127,11 +129,11 @@ const Dashboard = () => {
 
 	return (
 		<div className='min-h-screen bg-background p-6 md:p-8 lg:p-10'>
-			<div className='w-full max-w-[1600px] mx-auto space-y-8'>
+			<div className='w-full max-w-screen mx-auto space-y-8'>
 				{/* Header */}
 				<div className='flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4'>
 					<div>
-						<h1 className='text-3xl md:text-4xl font-bold tracking-tight'>
+						<h1 className='text-3xl text-foreground md:text-4xl font-bold tracking-tight'>
 							Dashboard
 						</h1>
 						<p className='text-muted-foreground mt-2'>
